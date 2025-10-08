@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
+
+    <!-- 健康状态图标 -->
+    <ImageView
+        android:id="@+id/report_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/bot_fit"/>
+
+    <!-- BMI数值显示 -->
+    <TextView
+        android:id="@+id/report_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bmi_result"
+        android:textSize="22sp"
+        android:layout_marginTop="30dp"/>
+
+    <!-- 健康建议显示（修改部分） -->
+    <TextView
+        android:id="@+id/report_advice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/advice_fit"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:minWidth="250dp"
+        android:gravity="center"
+        android:textAlignment="center"/>
+
+</LinearLayout>
