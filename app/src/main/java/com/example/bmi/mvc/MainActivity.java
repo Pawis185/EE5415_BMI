@@ -1,4 +1,4 @@
-package com.example.bmi;
+package com.example.bmi.mvc;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.bmi.R;
 
 import java.util.Locale;
 
