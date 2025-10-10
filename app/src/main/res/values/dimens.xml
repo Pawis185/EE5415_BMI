@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 边距 -->
+    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="vertical_margin">16dp</dimen>
+    <!-- 控件尺寸 -->
+    <dimen name="edittext_height">48dp</dimen>
+    <dimen name="button_text_size">16sp</dimen>
+    <dimen name="hint_text_size">14sp</dimen>
+</resources>

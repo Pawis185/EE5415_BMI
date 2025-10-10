@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 横屏布局：水平排列图标和文本 -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:padding="30dp">
+
+    <!-- 左侧：健康状态图标 -->
+    <ImageView
+        android:id="@+id/report_image"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:src="@drawable/bot_fit"
+        android:layout_marginEnd="40dp"/>
+
+    <!-- 右侧：结果和建议文本区域 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- BMI数值 -->
+        <TextView
+            android:id="@+id/report_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bmi_result"
+            android:textSize="24sp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- 健康建议 -->
+        <TextView
+            android:id="@+id/report_advice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/advice_fit"
+            android:textSize="22sp"
+            android:minWidth="300dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:lineSpacingExtra="4dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

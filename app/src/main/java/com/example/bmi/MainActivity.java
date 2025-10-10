@@ -2,12 +2,21 @@ package com.example.bmi;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent); // 启动结果页
             }
         });
+        registerForContextMenu(heightET);
+        registerForContextMenu(weightET);
+        registerForContextMenu(ageET);
+        registerForContextMenu(genderET);
     }
 
     // 保存数据到本地（SharedPreferences：轻量级存储）
@@ -107,5 +120,66 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         loadPreferences();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_english) {
+            setLocale("en");
+            return true;
+        } else if (id == R.id.menu_chinese) {
+            setLocale("zh");
+            return true;
+        } else if (id == R.id.menu_reset) {
+            heightET.setText("");
+            weightET.setText("");
+            ageET.setText("");
+            genderET.setText("");
+            return true;
+        } else if (id == R.id.menu_about) {
+            Toast.makeText(this, "BMI Calculator v3.0", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // 设置语言
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+
+        // 重启Activity以应用语言变化
+        recreate();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.context_clear) {
+            // 清除当前选中的输入框内容
+            if (item.getMenuInfo() instanceof EditText) {
+                ((EditText) item.getMenuInfo()).setText("");
+            }
+            return true;
+        }
+        return super.onContextItemSelected(item);
     }
 }

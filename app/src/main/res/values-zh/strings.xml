@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">身体质量指数</string>
+    <string name="bmi_height">身高 (厘米)</string>
+    <string name="bmi_weight">体重 (千克)</string>
+    <string name="bmi_age">年龄</string>
+    <string name="bmi_gender">性别 (男/女)</string>
+    <string name="bmi_btn">查看BMI报告</string>
+    <string name="bmi_result">您的BMI值为</string>
+    <string name="bmi_warning">身高/体重/年龄/性别不能为空！</string>
+    <string name="advice_thin">您需要增加热量摄入！</string>
+    <string name="advice_fit">您的身体状况良好！</string>
+    <string name="advice_fat">您需要注意饮食！</string>
+    <string name="advice_normal">正常范围 - 继续保持！</string>
+    <string name="advice_underweight">体重过轻 - 需要更多营养！</string>
+    <string name="advice_overweight">超重 - 注意饮食！</string>
+    <string name="advice_obese">肥胖 - 请加强锻炼！</string>
+    <string name="advice_severe_underweight">严重过轻 - 建议咨询医生！</string>
+    <string name="advice_severe_overweight">严重超重 - 急需改变生活方式！</string>
+    <string name="menu_language">语言</string>
+    <string name="menu_english">英文</string>
+    <string name="menu_chinese">中文</string>
+    <string name="menu_reset">重置</string>
+    <string name="menu_about">关于</string>
+</resources>

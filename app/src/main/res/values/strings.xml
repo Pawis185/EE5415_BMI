@@ -5,9 +5,11 @@
     <string name="bmi_weight">Weight (kg)</string>
     <string name="bmi_age">Age</string>
     <string name="bmi_gender">Gender (male/female)</string>
+
     <string name="bmi_btn">See BMI Report Now</string>
     <string name="bmi_result">Your BMI value is</string>
     <string name="bmi_warning">Height/Weight/Age/Gender cannot be empty!</string>
+
     <string name="advice_thin">You need more calories!</string>
     <string name="advice_fit">You look great!</string>
     <string name="advice_fat">You should be on diet!</string>
@@ -18,4 +20,9 @@
     <string name="advice_obese">Obese - Please exercise more!</string>
     <string name="advice_severe_underweight">Severely Underweight - Consult a doctor!</string>
     <string name="advice_severe_overweight">Severely Overweight - Urgent lifestyle changes needed!</string>
+    <string name="menu_language">Language</string>
+    <string name="menu_english">English</string>
+    <string name="menu_chinese">Chinese</string>
+    <string name="menu_reset">Reset</string>
+    <string name="menu_about">About</string>
 </resources>
