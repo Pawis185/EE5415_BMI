@@ -1,5 +1,6 @@
 package com.example.bmi;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -11,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,8 +27,11 @@ public class MainActivity extends AppCompatActivity {
     private EditText heightET;
     private EditText weightET;
     private EditText ageET;
-    private EditText genderET;
+    private RadioGroup genderRadioGroup;
+    private RadioButton radioMale;
+    private RadioButton radioFemale;
     private Button reportBtn;
+    private Button aboutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +43,19 @@ public class MainActivity extends AppCompatActivity {
         heightET = findViewById(R.id.heightET);
         weightET = findViewById(R.id.weightET);
         ageET = findViewById(R.id.ageET);
-        genderET = findViewById(R.id.genderET);
+        genderRadioGroup = findViewById(R.id.genderRadioGroup);
+        radioMale = findViewById(R.id.radioMale);
+        radioFemale = findViewById(R.id.radioFemale);
         reportBtn = findViewById(R.id.reportBtn);
+        aboutBtn = findViewById(R.id.aboutBtn);
+
+        // About BMI按钮点击事件
+        aboutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAboutDialog();
+            }
+        });
 
         // 给按钮设置点击事件（点击后计算BMI并跳转到结果页）
         reportBtn.setOnClickListener(new View.OnClickListener() {
@@ -48,19 +65,21 @@ public class MainActivity extends AppCompatActivity {
                 String height = heightET.getText().toString().trim();
                 String weight = weightET.getText().toString().trim();
                 String age = ageET.getText().toString().trim();
-                String gender = genderET.getText().toString().trim().toLowerCase();
+
+                // 获取性别选择
+                int selectedGenderId = genderRadioGroup.getCheckedRadioButtonId();
+                String gender = "";
+                if (selectedGenderId == R.id.radioMale) {
+                    gender = "male";
+                } else if (selectedGenderId == R.id.radioFemale) {
+                    gender = "female";
+                }
 
                 // 数据验证：判断身高/体重是否为空
                 if (height.isEmpty() || weight.isEmpty() || age.isEmpty() || gender.isEmpty()) {
                     // 弹出提示框
                     Toast.makeText(MainActivity.this, R.string.bmi_warning, Toast.LENGTH_SHORT).show();
                     return; // 为空则不执行后续操作
-                }
-
-                // 简单验证性别输入
-                if (!gender.equals("male") && !gender.equals("female")) {
-                    Toast.makeText(MainActivity.this, "Please enter 'male' or 'female' for gender", Toast.LENGTH_SHORT).show();
-                    return;
                 }
 
                 // 验证年龄范围（未成年人不支持小于6岁）
@@ -84,10 +103,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent); // 启动结果页
             }
         });
+
         registerForContextMenu(heightET);
         registerForContextMenu(weightET);
         registerForContextMenu(ageET);
-        registerForContextMenu(genderET);
+    }
+
+    // 显示About BMI对话框
+    private void showAboutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.about_bmi_title);
+        builder.setMessage(R.string.about_bmi_message);
+        builder.setPositiveButton(android.R.string.ok, null);
+        builder.show();
     }
 
     // 保存数据到本地（SharedPreferences：轻量级存储）
@@ -108,11 +136,18 @@ public class MainActivity extends AppCompatActivity {
         String savedWeight = pref.getString("saved_weight", "");
         String savedAge = pref.getString("saved_age", "");
         String savedGender = pref.getString("saved_gender", "");
+
         // 显示到输入框
         heightET.setText(savedHeight);
         weightET.setText(savedWeight);
         ageET.setText(savedAge);
-        genderET.setText(savedGender);
+
+        // 设置性别单选按钮
+        if (savedGender.equals("male")) {
+            radioMale.setChecked(true);
+        } else if (savedGender.equals("female")) {
+            radioFemale.setChecked(true);
+        }
     }
 
     // App启动或从后台回到前台时调用，加载历史数据
@@ -142,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
             heightET.setText("");
             weightET.setText("");
             ageET.setText("");
-            genderET.setText("");
+            genderRadioGroup.clearCheck();
             return true;
         } else if (id == R.id.menu_about) {
             Toast.makeText(this, "BMI Calculator v3.0", Toast.LENGTH_SHORT).show();

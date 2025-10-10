@@ -1,116 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <!-- 横屏布局内容，调整控件位置以适应横屏 -->
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/icon_128"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        android:padding="20dp"
+        tools:context=".MainActivity">
 
+        <!-- 左侧：图标 -->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/icon_128"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="20dp" />
+
+        <!-- 右侧：输入区域和按钮 -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:orientation="vertical">
 
-            <!-- 身高相关控件 -->
+            <!-- 身高 -->
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bmi_height"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:layout_marginStart="5dp" />
 
             <EditText
                 android:id="@+id/heightET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter height"
-                android:inputType="number" />
+                android:hint="120"
+                android:inputType="number"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="10dp" />
 
-            <!-- 体重相关控件 -->
+            <!-- 体重 -->
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:text="@string/bmi_weight"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:layout_marginStart="5dp" />
 
             <EditText
                 android:id="@+id/weightET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter weight"
-                android:inputType="numberDecimal" />
-        </LinearLayout>
+                android:hint="60"
+                android:inputType="numberDecimal"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="10dp" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <!-- 年龄相关控件 -->
+            <!-- 年龄 -->
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bmi_age"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:layout_marginStart="5dp" />
 
             <EditText
                 android:id="@+id/ageET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter age"
-                android:inputType="number" />
+                android:hint="12"
+                android:inputType="number"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="10dp" />
 
-            <!-- 性别相关控件 -->
+            <!-- 性别 -->
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:text="@string/bmi_gender"
-                android:textSize="18sp" />
+                android:textSize="16sp"
+                android:layout_marginStart="5dp" />
 
-            <EditText
-                android:id="@+id/genderET"
+            <RadioGroup
+                android:id="@+id/genderRadioGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter gender"
-                android:inputType="textCapWords" />
+                android:orientation="horizontal"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="15dp">
+
+                <RadioButton
+                    android:id="@+id/radioMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gender_male"
+                    android:layout_marginEnd="20dp" />
+
+                <RadioButton
+                    android:id="@+id/radioFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gender_female" />
+            </RadioGroup>
+
+            <!-- 按钮区域 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/reportBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/bmi_btn"
+                    android:textAllCaps="false"
+                    android:layout_marginEnd="10dp" />
+
+                <Button
+                    android:id="@+id/aboutBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/about_bmi"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="10dp" />
+            </LinearLayout>
+
         </LinearLayout>
+
     </LinearLayout>
-
-    <!-- 计算按钮 -->
-    <Button
-        android:id="@+id/reportBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="192dp"
-        android:text="@string/bmi_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -1,142 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:fillViewport="true">
 
-    <!-- App图标 -->
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        android:src="@drawable/icon_128"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
-
-    <!-- 身高提示文字 -->
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/bmi_height"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/heightET"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.1" />
+        android:padding="20dp"
+        tools:context=".MainActivity">
 
-    <!-- 身高输入框 -->
-    <EditText
-        android:id="@+id/heightET"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Enter height"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"/>
+        <!-- App图标 -->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:src="@drawable/icon_128"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp" />
 
-    <!-- 体重提示文字 -->
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bmi_weight"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/weightET"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heightET"
-        app:layout_constraintHorizontal_bias="0.1"
-        android:layout_marginTop="20dp"/>
+        <!-- 身高提示文字 -->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bmi_height"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="10dp" />
 
-    <!-- 体重输入框 -->
-    <EditText
-        android:id="@+id/weightET"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Enter weight"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"/>
+        <!-- 身高输入框 -->
+        <EditText
+            android:id="@+id/heightET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="120"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp" />
 
-    <!-- 年龄提示文字 -->
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bmi_age"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/ageET"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightET"
-        app:layout_constraintHorizontal_bias="0.1"
-        android:layout_marginTop="20dp"/>
+        <!-- 体重提示文字 -->
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bmi_weight"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/heightET"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp" />
 
-    <!-- 年龄输入框 -->
-    <EditText
-        android:id="@+id/ageET"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Enter age"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"/>
+        <!-- 体重输入框 -->
+        <EditText
+            android:id="@+id/weightET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="60"
+            android:inputType="numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp" />
 
-    <!-- 性别提示文字 -->
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bmi_gender"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/genderET"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ageET"
-        app:layout_constraintHorizontal_bias="0.1"
-        android:layout_marginTop="20dp"/>
+        <!-- 年龄提示文字 -->
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bmi_age"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weightET"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp" />
 
-    <!-- 性别输入框 -->
-    <EditText
-        android:id="@+id/genderET"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Enter gender"
-        android:inputType="textCapWords"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"/>
+        <!-- 年龄输入框 -->
+        <EditText
+            android:id="@+id/ageET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="12"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp" />
 
-    <!-- 计算按钮 -->
-    <Button
-        android:id="@+id/reportBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="100dp"
-        android:text="@string/bmi_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightET"
-        app:layout_constraintVertical_bias="0.845" />
+        <!-- 性别提示文字 -->
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bmi_gender"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ageET"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- 性别选择RadioGroup -->
+        <RadioGroup
+            android:id="@+id/genderRadioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp">
+
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender_male"
+                android:layout_marginEnd="30dp" />
+
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender_female" />
+        </RadioGroup>
+
+        <!-- 查看BMI报告按钮 -->
+        <Button
+            android:id="@+id/reportBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/bmi_btn"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/genderRadioGroup"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp" />
+
+        <!-- About BMI按钮 -->
+        <Button
+            android:id="@+id/aboutBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="30dp"
+            android:text="@string/about_bmi"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reportBtn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

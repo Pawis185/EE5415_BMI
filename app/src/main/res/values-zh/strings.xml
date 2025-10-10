@@ -4,8 +4,17 @@
     <string name="bmi_height">身高 (厘米)</string>
     <string name="bmi_weight">体重 (千克)</string>
     <string name="bmi_age">年龄</string>
-    <string name="bmi_gender">性别 (男/女)</string>
+    <string name="bmi_gender">性别</string>
+
+    <string name="gender_male">男</string>
+    <string name="gender_female">女</string>
+
     <string name="bmi_btn">查看BMI报告</string>
+    <string name="about_bmi">关于BMI</string>
+
+    <string name="about_bmi_title">关于BMI</string>
+    <string name="about_bmi_message">BMI = 体重指数 = 身高 (米) / 体重 (千克) ^ 2; BMI在20到25之间为正常。</string>
+
     <string name="bmi_result">您的BMI值为</string>
     <string name="bmi_warning">身高/体重/年龄/性别不能为空！</string>
     <string name="advice_thin">您需要增加热量摄入！</string>
