@@ -5,7 +5,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon_128"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -19,7 +19,7 @@
         <activity
             android:name=".mvc.MainActivity"
             android:exported="true"
-            android:label="BMI Calculator (MVC)">
+            android:label="@string/bmi_calculator_mvc">
 
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -31,7 +31,7 @@
         <activity
             android:name=".mvc.ReportActivity"
             android:exported="false"
-            android:label="BMI Report (MVC)" />
+            android:label="@string/bmi_report_mvc" />
 
         <!-- ============================================= -->
         <!-- MVP Architecture                              -->
@@ -40,7 +40,7 @@
         <activity
             android:name=".mvp.view.MainMvpActivity"
             android:exported="true"
-            android:label="BMI Calculator (MVP)">
+            android:label="@string/bmi_calculator_mvp">
 
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -52,7 +52,7 @@
         <activity
             android:name=".mvp.view.ReportMvpActivity"
             android:exported="false"
-            android:label="BMI Report (MVP)" />
+            android:label="@string/bmi_report_mvp" />
 
         <!-- ============================================= -->
         <!-- MVVM Architecture                             -->
@@ -61,7 +61,7 @@
         <activity
             android:name=".mvvm.view.MainMvvmActivity"
             android:exported="true"
-            android:label="BMI Calculator (MVVM)">
+            android:label="@string/bmi_calculator_mvvm">
 
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -73,7 +73,7 @@
         <activity
             android:name=".mvvm.view.ReportMvvmActivity"
             android:exported="false"
-            android:label="BMI Report (MVVM)" />
+            android:label="@string/bmi_report_mvvm" />
 
         <!-- ============================================= -->
         <!-- MVI Architecture                              -->
@@ -82,7 +82,7 @@
         <activity
             android:name=".mvi.view.MainMviActivity"
             android:exported="true"
-            android:label="BMI Calculator (MVI)">
+            android:label="@string/bmi_calculator_mvi">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -94,7 +94,7 @@
         <activity
             android:name=".mvi.view.ReportMviActivity"
             android:exported="false"
-            android:label="BMI Report (MVI)" />
+            android:label="@string/bmi_report_mvi" />
 
         <!-- ============================================= -->
         <!-- Architecture Selector (Optional)              -->

@@ -1,5 +1,8 @@
 package com.example.bmi.mvp.view;
 
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +15,7 @@ import com.example.bmi.mvp.model.BmiModel;
 import com.example.bmi.mvp.presenter.ReportPresenter;
 
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 public class ReportMvpActivity extends AppCompatActivity implements ReportContract.View {
 
@@ -23,8 +27,14 @@ public class ReportMvpActivity extends AppCompatActivity implements ReportContra
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // 在 super.onCreate 之前应用保存的语言设置
+        applySavedLocale();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
+
+        // 动态设置标题
+        setTitle(R.string.bmi_report_mvp);
 
         // 初始化Presenter
         presenter = new ReportPresenter(this);
@@ -83,5 +93,18 @@ public class ReportMvpActivity extends AppCompatActivity implements ReportContra
         blink.setRepeatMode(android.view.animation.Animation.REVERSE);
         blink.setRepeatCount(android.view.animation.Animation.INFINITE);
         textView.startAnimation(blink);
+    }
+
+    private void applySavedLocale() {
+        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
+        String languageCode = prefs.getString("Language", "en");
+
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        Resources resources = getResources();
+        Configuration config = new Configuration(resources.getConfiguration());
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }

@@ -2,6 +2,7 @@ package com.example.bmi.mvvm.view;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -40,8 +41,13 @@ public class MainMvvmActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // 在 super.onCreate 之前应用保存的语言设置
+        applySavedLocale();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 动态设置标题
+        setTitle(R.string.bmi_calculator_mvvm);
 
         // 初始化ViewModel
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -199,5 +205,18 @@ public class MainMvvmActivity extends AppCompatActivity {
             return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void applySavedLocale() {
+        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
+        String languageCode = prefs.getString("Language", "en");
+
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        Resources resources = getResources();
+        Configuration config = new Configuration(resources.getConfiguration());
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }

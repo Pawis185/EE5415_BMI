@@ -2,6 +2,7 @@ package com.example.bmi.mvi.view;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -39,11 +40,18 @@ public class MainMviActivity extends AppCompatActivity {
     private Button aboutBtn;
 
     private MainViewModel viewModel;
+    private boolean hasNavigated = false; // 添加标志防止重复跳转
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // 在 super.onCreate 之前应用保存的语言设置
+        applySavedLocale();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 动态设置标题
+        setTitle(R.string.bmi_calculator_mvi);
 
         // 初始化ViewModel
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -51,6 +59,31 @@ public class MainMviActivity extends AppCompatActivity {
         initViews();
         setupListeners();
         observeViewState();
+
+        // 恢复导航状态
+        if (savedInstanceState != null) {
+            hasNavigated = savedInstanceState.getBoolean("hasNavigated", false);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // 保存导航状态
+        outState.putBoolean("hasNavigated", hasNavigated);
+    }
+
+    private void applySavedLocale() {
+        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
+        String languageCode = prefs.getString("Language", "en");
+
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        Resources resources = getResources();
+        Configuration config = new Configuration(resources.getConfiguration());
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
     private void initViews() {
@@ -83,6 +116,7 @@ public class MainMviActivity extends AppCompatActivity {
             }
 
             // 发送Intent给ViewModel
+            hasNavigated = false; // 重置标志
             viewModel.processIntent(
                     new MainIntent.CalculateBmi(height, weight, age, gender)
             );
@@ -96,30 +130,27 @@ public class MainMviActivity extends AppCompatActivity {
         viewModel.getViewState().observe(this, this::render);
     }
 
-    // 根据ViewState渲染UI
     private void render(MainViewState state) {
         if (state == null) return;
 
         switch (state.getStatus()) {
             case IDLE:
-                // 空闲状态 - 不做任何操作
                 break;
 
             case SUCCESS:
-                // 成功加载保存的数据
                 if (state.getSavedData() != null) {
                     loadSavedData(state.getSavedData());
                 }
                 break;
 
             case ERROR:
-                // 显示错误消息
                 showError(state.getErrorMessage());
                 break;
 
             case NAVIGATE:
-                // 导航到结果页面
-                if (state.getCalculatedData() != null) {
+                // 只有在未导航过时才执行跳转
+                if (!hasNavigated && state.getCalculatedData() != null) {
+                    hasNavigated = true;
                     navigateToReport(state.getCalculatedData());
                 }
                 break;
@@ -193,6 +224,10 @@ public class MainMviActivity extends AppCompatActivity {
     }
 
     private void setLocale(String lang) {
+        // 保存语言设置到 SharedPreferences
+        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
+        prefs.edit().putString("Language", lang).apply();
+
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Resources resources = getResources();

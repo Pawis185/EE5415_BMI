@@ -35,4 +35,13 @@
     <string name="menu_reset">Reset</string>
     <string name="menu_about">About</string>
     <string name="context_clear">Clear</string>
+    <string name="bmi_calculator_mvc">BMI Calculator(MVC)</string>
+    <string name="bmi_report_mvc">BMI Report(MVC)</string>
+    <string name="bmi_calculator_mvi">BMI Calculator(MVI)</string>
+    <string name="bmi_report_mvi">BMI Report(MVI)</string>
+    <string name="bmi_calculator_mvp">BMI Calculator(MVP)</string>
+    <string name="bmi_report_mvp">BMI Report(MVP)</string>
+    <string name="bmi_calculator_mvvm">BMI Calculator(MVVM)</string>
+    <string name="bmi_report_mvvm">BMI Report(MVVM)</string>
+
 </resources>
