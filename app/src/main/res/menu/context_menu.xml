@@ -2,5 +2,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/context_clear"
-        android:title="Clear"/>
+        android:title="@string/context_clear"/>
 </menu>
