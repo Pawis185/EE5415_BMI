@@ -46,7 +46,7 @@ public class MainMvvmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 动态设置标题
+        // 动态设置标题（会根据当前语言自动选择对应的字符串资源）
         setTitle(R.string.bmi_calculator_mvvm);
 
         // 初始化ViewModel
@@ -181,6 +181,10 @@ public class MainMvvmActivity extends AppCompatActivity {
     }
 
     private void setLocale(String lang) {
+        // 保存语言设置到 SharedPreferences（修复问题2）
+        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
+        prefs.edit().putString("Language", lang).apply();
+
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Resources resources = getResources();

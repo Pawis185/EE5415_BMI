@@ -40,7 +40,8 @@ public class MainMviActivity extends AppCompatActivity {
     private Button aboutBtn;
 
     private MainViewModel viewModel;
-    private boolean hasNavigated = false; // 添加标志防止重复跳转
+    private boolean hasNavigated = false;
+    private boolean isRestoringState = false; // 添加恢复状态标志
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class MainMviActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 动态设置标题
+        // 动态设置标题（会根据当前语言自动选择对应的字符串资源）
         setTitle(R.string.bmi_calculator_mvi);
 
         // 初始化ViewModel
@@ -58,12 +59,17 @@ public class MainMviActivity extends AppCompatActivity {
 
         initViews();
         setupListeners();
-        observeViewState();
 
         // 恢复导航状态
         if (savedInstanceState != null) {
             hasNavigated = savedInstanceState.getBoolean("hasNavigated", false);
+            isRestoringState = true; // 标记正在恢复状态
         }
+
+        observeViewState();
+
+        // 恢复状态完成
+        isRestoringState = false;
     }
 
     @Override
@@ -148,8 +154,8 @@ public class MainMviActivity extends AppCompatActivity {
                 break;
 
             case NAVIGATE:
-                // 只有在未导航过时才执行跳转
-                if (!hasNavigated && state.getCalculatedData() != null) {
+                // 只有在未导航过且不是恢复状态时才执行跳转
+                if (!hasNavigated && !isRestoringState && state.getCalculatedData() != null) {
                     hasNavigated = true;
                     navigateToReport(state.getCalculatedData());
                 }
@@ -224,7 +230,7 @@ public class MainMviActivity extends AppCompatActivity {
     }
 
     private void setLocale(String lang) {
-        // 保存语言设置到 SharedPreferences
+        // 保存语言设置到 SharedPreferences（修复问题2）
         SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
         prefs.edit().putString("Language", lang).apply();
 
