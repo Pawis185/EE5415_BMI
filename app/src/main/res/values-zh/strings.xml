@@ -26,12 +26,14 @@
     <string name="advice_obese">肥胖 - 请加强锻炼！</string>
     <string name="advice_severe_underweight">严重过轻 - 建议咨询医生！</string>
     <string name="advice_severe_overweight">严重超重 - 急需改变生活方式！</string>
+
     <string name="menu_language">语言</string>
     <string name="menu_english">英文</string>
     <string name="menu_chinese">中文</string>
     <string name="menu_reset">重置</string>
     <string name="menu_about">关于</string>
     <string name="context_clear">清除</string>
+
     <string name="bmi_calculator_mvc">BMI 计算器(MVC)</string>
     <string name="bmi_report_mvc">BMI 报告(MVC)</string>
     <string name="bmi_calculator_mvi">BMI 计算器(MVI)</string>
@@ -40,4 +42,8 @@
     <string name="bmi_report_mvp">BMI 报告(MVP)</string>
     <string name="bmi_calculator_mvvm">BMI 计算器(MVVM)</string>
     <string name="bmi_report_mvvm">BMI 报告(MVVM)</string>
+
+    <!-- New AI Suggestion String -->
+    <string name="ai_health_suggestion">AI健康建议</string>
+
 </resources>

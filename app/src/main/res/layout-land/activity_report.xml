@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 横屏布局：水平排列图标和文本 -->
+<!-- 横屏布局：水平排列图标和文本（包含AI建议相关内容） -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:src="@drawable/bot_fit"
         android:layout_marginEnd="40dp"/>
 
-    <!-- 右侧：结果和建议文本区域 -->
+    <!-- 右侧：结果、建议及AI内容区域 -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +42,51 @@
             android:minWidth="300dp"
             android:gravity="center"
             android:textAlignment="center"
-            android:lineSpacingExtra="4dp"/>
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- 分割线 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#CCCCCC"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- AI建议标题 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ai_health_suggestion"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- 加载进度条 -->
+        <ProgressBar
+            android:id="@+id/loading_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- LLM健康建议显示 -->
+        <TextView
+            android:id="@+id/llm_suggestion"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:padding="15dp"
+            android:background="@drawable/llm_suggestion_bg"
+            android:gravity="start"
+            android:textAlignment="textStart"
+            android:lineSpacingExtra="4dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

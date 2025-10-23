@@ -4,7 +4,9 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,27 +27,34 @@ public class ReportMviActivity extends AppCompatActivity {
     private ImageView reportImage;
     private TextView reportResult;
     private TextView reportAdvice;
+    private TextView llmSuggestion;
+    private ProgressBar loadingProgress;
 
     private ReportViewModel viewModel;
+    private String currentLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // 在 super.onCreate 之前应用保存的语言设置
+        // Apply saved locale before super.onCreate
         applySavedLocale();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
-        // 动态设置标题
+        // Set title dynamically
         setTitle(R.string.bmi_report_mvi);
 
-        // 初始化ViewModel
+        // Get current language
+        SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
+        currentLanguage = prefs.getString("Language", "en");
+
+        // Initialize ViewModel
         viewModel = new ViewModelProvider(this).get(ReportViewModel.class);
 
         initViews();
         observeViewState();
 
-        // 获取传递的数据
+        // Get passed data
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String height = bundle.getString("height");
@@ -53,7 +62,7 @@ public class ReportMviActivity extends AppCompatActivity {
             String age = bundle.getString("age");
             String gender = bundle.getString("gender");
 
-            // 发送Intent给ViewModel计算BMI
+            // Send Intent to ViewModel to calculate BMI
             viewModel.processIntent(
                     new ReportIntent.CalculateResult(height, weight, age, gender)
             );
@@ -64,67 +73,95 @@ public class ReportMviActivity extends AppCompatActivity {
         reportImage = findViewById(R.id.report_image);
         reportResult = findViewById(R.id.report_result);
         reportAdvice = findViewById(R.id.report_advice);
+        llmSuggestion = findViewById(R.id.llm_suggestion);
+        loadingProgress = findViewById(R.id.loading_progress);
     }
 
     private void observeViewState() {
-        // 观察ViewState的变化
+        // Observe ViewState changes
         viewModel.getViewState().observe(this, this::render);
+
+        // Observe LLM suggestion
+        viewModel.getLlmSuggestion().observe(this, suggestion -> {
+            if (suggestion != null && !suggestion.isEmpty()) {
+                llmSuggestion.setVisibility(View.VISIBLE);
+                llmSuggestion.setText(suggestion);
+                loadingProgress.setVisibility(View.GONE);
+            }
+        });
+
+        // Observe LLM error
+        viewModel.getLlmError().observe(this, error -> {
+            if (error != null && !error.isEmpty()) {
+                loadingProgress.setVisibility(View.GONE);
+                llmSuggestion.setVisibility(View.VISIBLE);
+                llmSuggestion.setText(currentLanguage.equals("zh") ?
+                        "无法获取AI建议，请稍后重试" :
+                        "Unable to get AI suggestion, please try again later");
+            }
+        });
     }
 
-    // 根据ViewState渲染UI
+    // Render UI based on ViewState
     private void render(ReportViewState state) {
         if (state == null) return;
 
         switch (state.getStatus()) {
             case IDLE:
-                // 空闲状态 - 不做任何操作
+                // Idle state - do nothing
                 break;
 
             case LOADING:
-                // 加载状态 - 可以显示进度条
+                // Loading state - show progress
+                loadingProgress.setVisibility(View.VISIBLE);
                 break;
 
             case SUCCESS:
-                // 成功状态 - 显示结果
+                // Success state - display result
                 if (state.getResult() != null) {
                     displayResult(state.getResult());
                 }
                 break;
 
             case ERROR:
-                // 错误状态 - 显示错误消息
+                // Error state - show error message
                 showError(state.getErrorMessage());
+                loadingProgress.setVisibility(View.GONE);
                 break;
         }
     }
 
     private void displayResult(BmiResult result) {
-        // 格式化BMI值
+        // Format BMI value
         DecimalFormat df = new DecimalFormat("0.0");
         String bmiValue = df.format(result.bmiValue);
 
-        // 显示BMI值
+        // Display BMI value
         reportResult.setText(getString(R.string.bmi_result) + " " + bmiValue);
 
-        // 设置图片
+        // Set image
         reportImage.setImageResource(result.imageResource);
 
-        // 设置建议
+        // Set advice
         reportAdvice.setText(result.adviceResource);
 
-        // 如果是严重情况，添加特殊样式和动画
+        // Add special style and animation for severe cases
         if (result.isSevere) {
             reportAdvice.setTextAppearance(this, R.style.SevereWarningText);
             reportAdvice.setBackgroundResource(R.drawable.severe_warning_bg);
             startBlinkAnimation(reportAdvice);
         }
+
+        // Show loading for LLM suggestion
+        loadingProgress.setVisibility(View.VISIBLE);
+        llmSuggestion.setVisibility(View.GONE);
     }
 
     private void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // 添加闪烁动画方法
+    // Add blink animation
     private void startBlinkAnimation(TextView textView) {
         android.view.animation.Animation blink =
                 new android.view.animation.AlphaAnimation(0.3f, 1.0f);
@@ -145,5 +182,12 @@ public class ReportMviActivity extends AppCompatActivity {
         Configuration config = new Configuration(resources.getConfiguration());
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Clean up LLM service
+        viewModel.cleanup();
     }
 }

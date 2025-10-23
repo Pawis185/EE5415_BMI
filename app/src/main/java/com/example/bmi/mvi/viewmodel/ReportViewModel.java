@@ -1,50 +1,69 @@
 package com.example.bmi.mvi.viewmodel;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.bmi.mvi.api.LLMApiService;
 import com.example.bmi.mvi.intent.ReportIntent;
 import com.example.bmi.mvi.model.BmiModel;
 import com.example.bmi.mvi.model.BmiResult;
 import com.example.bmi.mvi.state.ReportViewState;
 
-// MVI架构的ViewModel - 处理Intent并更新ViewState
+/**
+ * MVI Architecture ViewModel - Handles Intent and updates ViewState
+ * Enhanced with LLM API integration
+ */
 public class ReportViewModel extends AndroidViewModel {
 
     private BmiModel model;
+    private LLMApiService llmApiService;
     private MutableLiveData<ReportViewState> viewStateLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> llmSuggestionLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> llmErrorLiveData = new MutableLiveData<>();
 
     public ReportViewModel(@NonNull Application application) {
         super(application);
         model = new BmiModel(application);
+        llmApiService = new LLMApiService();
 
-        // 初始化为空闲状态
+        // Initialize to idle state
         viewStateLiveData.setValue(ReportViewState.idle());
     }
 
-    // 获取ViewState的LiveData
+    // Get ViewState LiveData
     public LiveData<ReportViewState> getViewState() {
         return viewStateLiveData;
     }
 
-    // 处理Intent
+    // Get LLM Suggestion LiveData
+    public LiveData<String> getLlmSuggestion() {
+        return llmSuggestionLiveData;
+    }
+
+    // Get LLM Error LiveData
+    public LiveData<String> getLlmError() {
+        return llmErrorLiveData;
+    }
+
+    // Process Intent
     public void processIntent(ReportIntent intent) {
         if (intent instanceof ReportIntent.CalculateResult) {
             handleCalculateResult((ReportIntent.CalculateResult) intent);
         }
     }
 
-    // 处理计算结果
+    // Handle calculate result
     private void handleCalculateResult(ReportIntent.CalculateResult intent) {
         try {
-            // 设置加载状态
+            // Set loading state
             viewStateLiveData.setValue(ReportViewState.loading());
 
-            // 计算BMI结果
+            // Calculate BMI result
             BmiResult result = model.getBmiResult(
                     intent.height,
                     intent.weight,
@@ -52,13 +71,54 @@ public class ReportViewModel extends AndroidViewModel {
                     intent.gender
             );
 
-            // 设置成功状态
+            // Set success state
             viewStateLiveData.setValue(ReportViewState.success(result));
+
+            // Get current language from SharedPreferences
+            SharedPreferences prefs = getApplication().getSharedPreferences(
+                    "Settings",
+                    Application.MODE_PRIVATE
+            );
+            String language = prefs.getString("Language", "en");
+
+            // Call LLM API for health suggestion
+            int age = Integer.parseInt(intent.age);
+            llmApiService.getHealthSuggestion(
+                    result.bmiValue,
+                    age,
+                    intent.gender,
+                    language,
+                    new LLMApiService.LLMCallback() {
+                        @Override
+                        public void onSuccess(String suggestion) {
+                            llmSuggestionLiveData.setValue(suggestion);
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            llmErrorLiveData.setValue(error);
+                        }
+                    }
+            );
+
         } catch (Exception e) {
-            // 设置错误状态
+            // Set error state
             viewStateLiveData.setValue(
                     ReportViewState.error("Calculation error: " + e.getMessage())
             );
         }
+    }
+
+    // Cleanup resources
+    public void cleanup() {
+        if (llmApiService != null) {
+            llmApiService.shutdown();
+        }
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        cleanup();
     }
 }

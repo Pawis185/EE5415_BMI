@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.bmi">
 
+    <!-- ============================================= -->
+    <!-- Permissions                                   -->
+    <!-- ============================================= -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon_128"
@@ -10,22 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <!-- ============================================= -->
         <!-- MVC Architecture                              -->
         <!-- ============================================= -->
-        <!-- Uncomment the intent-filter to use MVC as launcher -->
         <activity
             android:name=".mvc.MainActivity"
             android:exported="true"
             android:label="@string/bmi_calculator_mvc">
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-
         </activity>
 
         <activity
@@ -36,17 +36,10 @@
         <!-- ============================================= -->
         <!-- MVP Architecture                              -->
         <!-- ============================================= -->
-        <!-- Uncomment the intent-filter to use MVP as launcher -->
         <activity
             android:name=".mvp.view.MainMvpActivity"
             android:exported="true"
             android:label="@string/bmi_calculator_mvp">
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-
         </activity>
 
         <activity
@@ -57,17 +50,10 @@
         <!-- ============================================= -->
         <!-- MVVM Architecture                             -->
         <!-- ============================================= -->
-        <!-- Uncomment the intent-filter to use MVVM as launcher -->
         <activity
             android:name=".mvvm.view.MainMvvmActivity"
             android:exported="true"
             android:label="@string/bmi_calculator_mvvm">
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-
         </activity>
 
         <activity
@@ -76,9 +62,8 @@
             android:label="@string/bmi_report_mvvm" />
 
         <!-- ============================================= -->
-        <!-- MVI Architecture                              -->
+        <!-- MVI Architecture (Default Launcher)           -->
         <!-- ============================================= -->
-        <!-- Uncomment the intent-filter to use MVI as launcher -->
         <activity
             android:name=".mvi.view.MainMviActivity"
             android:exported="true"
@@ -96,28 +81,6 @@
             android:exported="false"
             android:label="@string/bmi_report_mvi" />
 
-        <!-- ============================================= -->
-        <!-- Architecture Selector (Optional)              -->
-        <!-- ============================================= -->
-        <!-- You can create a launcher activity to choose architecture -->
-        <!--
-        <activity
-            android:name=".ArchitectureSelectorActivity"
-            android:exported="true"
-            android:label="BMI Calculator">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        -->
-
     </application>
-
-    <!-- ============================================= -->
-    <!-- Permissions (Add if needed)                  -->
-    <!-- ============================================= -->
-    <!-- <uses-permission android:name="android.permission.INTERNET" /> -->
-    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> -->
 
 </manifest>
