@@ -33,6 +33,9 @@ public class ReportMviActivity extends AppCompatActivity {
     private ReportViewModel viewModel;
     private String currentLanguage;
 
+    // 标记是否已经处理过Intent（避免横竖屏切换重复计算）
+    private boolean hasProcessedIntent = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Apply saved locale before super.onCreate
@@ -54,19 +57,38 @@ public class ReportMviActivity extends AppCompatActivity {
         initViews();
         observeViewState();
 
-        // Get passed data
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            String height = bundle.getString("height");
-            String weight = bundle.getString("weight");
-            String age = bundle.getString("age");
-            String gender = bundle.getString("gender");
-
-            // Send Intent to ViewModel to calculate BMI
-            viewModel.processIntent(
-                    new ReportIntent.CalculateResult(height, weight, age, gender)
-            );
+        // 恢复状态或处理新的Intent
+        if (savedInstanceState != null) {
+            hasProcessedIntent = savedInstanceState.getBoolean("hasProcessedIntent", false);
+            // 横竖屏切换时恢复结果
+            if (hasProcessedIntent) {
+                viewModel.restoreResult();
+            }
         }
+
+        // Get passed data (只在首次创建时处理)
+        if (!hasProcessedIntent) {
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null) {
+                String height = bundle.getString("height");
+                String weight = bundle.getString("weight");
+                String age = bundle.getString("age");
+                String gender = bundle.getString("gender");
+
+                // Send Intent to ViewModel to calculate BMI
+                viewModel.processIntent(
+                        new ReportIntent.CalculateResult(height, weight, age, gender)
+                );
+                hasProcessedIntent = true;
+            }
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // 保存状态标记
+        outState.putBoolean("hasProcessedIntent", hasProcessedIntent);
     }
 
     private void initViews() {
@@ -187,7 +209,9 @@ public class ReportMviActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Clean up LLM service
-        viewModel.cleanup();
+        // 只在Activity真正销毁时清理资源
+        if (isFinishing()) {
+            viewModel.cleanup();
+        }
     }
 }
