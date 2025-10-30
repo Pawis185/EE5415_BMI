@@ -11,6 +11,7 @@
 
     <string name="bmi_btn">查看BMI报告</string>
     <string name="about_bmi">关于BMI</string>
+    <string name="bmi_history">查看BMI历史</string>
 
     <string name="about_bmi_title">关于BMI</string>
     <string name="about_bmi_message">BMI = 体重指数 = 身高 (米) / 体重 (千克) ^ 2; BMI在20到25之间为正常。</string>
@@ -32,6 +33,7 @@
     <string name="menu_chinese">中文</string>
     <string name="menu_reset">重置</string>
     <string name="menu_about">关于</string>
+    <string name="menu_history">历史记录</string>
     <string name="context_clear">清除</string>
 
     <string name="bmi_calculator_mvc">BMI 计算器(MVC)</string>
@@ -43,7 +45,26 @@
     <string name="bmi_calculator_mvvm">BMI 计算器(MVVM)</string>
     <string name="bmi_report_mvvm">BMI 报告(MVVM)</string>
 
-    <!-- New AI Suggestion String -->
+    <!-- AI建议 -->
     <string name="ai_health_suggestion">AI健康建议</string>
 
+    <!-- BMI 历史 -->
+    <string name="bmi_history_title">BMI历史记录</string>
+    <string name="statistics_title">统计信息</string>
+    <string name="total_records">总记录数</string>
+    <string name="latest_bmi">最新BMI</string>
+    <string name="bmi_trend_title">BMI趋势图</string>
+    <string name="bmi_trend">BMI趋势</string>
+    <string name="bmi_history_chart_desc">BMI随时间的变化</string>
+    <string name="no_bmi_records">暂无BMI记录。请先计算您的BMI！</string>
+    <string name="bmi_categories">BMI分类</string>
+    <string name="bmi_category_underweight">&lt; 18.5: 体重过轻</string>
+    <string name="bmi_category_normal">18.5 - 23: 正常</string>
+    <string name="bmi_category_overweight">23 - 25: 超重</string>
+    <string name="bmi_category_obese">&gt; 25: 肥胖</string>
+    <string name="underweight_line">过轻</string>
+    <string name="normal_line">正常</string>
+    <string name="overweight_line">超重</string>
+    <string name="generate_test_data">生成测试数据</string>
+    <string name="clear_all_data">清除所有数据</string>
 </resources>

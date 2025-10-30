@@ -154,6 +154,20 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp" />
 
+        <!-- BMI History Button (NEW) -->
+        <Button
+            android:id="@+id/historyBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/bmi_history"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reportBtn"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp" />
+
         <!-- About BMI按钮 -->
         <Button
             android:id="@+id/aboutBtn"
@@ -165,7 +179,7 @@
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reportBtn"
+            app:layout_constraintTop_toBottomOf="@+id/historyBtn"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp" />

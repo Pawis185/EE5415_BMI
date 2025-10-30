@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.bmi.database.BmiDatabaseHelper;
 import com.example.bmi.mvi.api.LLMApiService;
 import com.example.bmi.mvi.intent.ReportIntent;
 import com.example.bmi.mvi.model.BmiModel;
@@ -16,23 +17,29 @@ import com.example.bmi.mvi.state.ReportViewState;
 
 /**
  * MVI Architecture ViewModel - Handles Intent and updates ViewState
- * Enhanced with LLM API integration (Fixed version)
+ * Enhanced with LLM API integration and SQLite database storage
  */
 public class ReportViewModel extends AndroidViewModel {
 
     private BmiModel model;
     private LLMApiService llmApiService;
+    private BmiDatabaseHelper dbHelper;
     private MutableLiveData<ReportViewState> viewStateLiveData = new MutableLiveData<>();
     private MutableLiveData<String> llmSuggestionLiveData = new MutableLiveData<>();
     private MutableLiveData<String> llmErrorLiveData = new MutableLiveData<>();
 
     // 保存当前的BMI结果，用于横竖屏切换时恢复
     private BmiResult currentResult;
+    private String currentHeight;
+    private String currentWeight;
+    private String currentAge;
+    private String currentGender;
 
     public ReportViewModel(@NonNull Application application) {
         super(application);
         model = new BmiModel(application);
         llmApiService = new LLMApiService();
+        dbHelper = new BmiDatabaseHelper(application);
 
         // Initialize to idle state
         viewStateLiveData.setValue(ReportViewState.idle());
@@ -74,8 +81,16 @@ public class ReportViewModel extends AndroidViewModel {
                     intent.gender
             );
 
-            // 保存当前结果
+            // 保存当前结果和输入数据
             currentResult = result;
+            currentHeight = intent.height;
+            currentWeight = intent.weight;
+            currentAge = intent.age;
+            currentGender = intent.gender;
+
+            // Save BMI record to SQLite database
+            saveBmiToDatabase(result.bmiValue, intent.height, intent.weight,
+                    intent.age, intent.gender);
 
             // Set success state
             viewStateLiveData.setValue(ReportViewState.success(result));
@@ -116,6 +131,22 @@ public class ReportViewModel extends AndroidViewModel {
     }
 
     /**
+     * Save BMI record to SQLite database
+     */
+    private void saveBmiToDatabase(double bmi, String height, String weight,
+                                   String age, String gender) {
+        try {
+            long result = dbHelper.insertOrUpdateBmiRecord(bmi, height, weight, age, gender);
+            if (result == -1) {
+                // Log error but don't interrupt the flow
+                android.util.Log.e("ReportViewModel", "Failed to save BMI record to database");
+            }
+        } catch (Exception e) {
+            android.util.Log.e("ReportViewModel", "Error saving BMI record", e);
+        }
+    }
+
+    /**
      * 恢复BMI结果（用于横竖屏切换）
      */
     public void restoreResult() {
@@ -135,6 +166,9 @@ public class ReportViewModel extends AndroidViewModel {
         // 只在ViewModel真正被清除时才关闭服务
         if (llmApiService != null) {
             llmApiService.forceShutdown();
+        }
+        if (dbHelper != null) {
+            dbHelper.close();
         }
     }
 }

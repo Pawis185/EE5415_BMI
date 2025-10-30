@@ -81,6 +81,13 @@
             android:exported="false"
             android:label="@string/bmi_report_mvi" />
 
+        <!-- NEW: BMI History Activity -->
+        <activity
+            android:name=".mvi.view.BmiHistoryActivity"
+            android:exported="false"
+            android:label="@string/bmi_history_title"
+            android:parentActivityName=".mvi.view.MainMviActivity" />
+
     </application>
 
 </manifest>

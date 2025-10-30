@@ -38,10 +38,11 @@ public class MainMviActivity extends AppCompatActivity {
     private RadioButton radioFemale;
     private Button reportBtn;
     private Button aboutBtn;
+    private Button historyBtn; // New button for BMI history
 
     private MainViewModel viewModel;
     private boolean hasNavigated = false;
-    private boolean isRestoringState = false; // 添加恢复状态标志
+    private boolean isRestoringState = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class MainMviActivity extends AppCompatActivity {
         // 恢复导航状态
         if (savedInstanceState != null) {
             hasNavigated = savedInstanceState.getBoolean("hasNavigated", false);
-            isRestoringState = true; // 标记正在恢复状态
+            isRestoringState = true;
         }
 
         observeViewState();
@@ -101,6 +102,7 @@ public class MainMviActivity extends AppCompatActivity {
         radioFemale = findViewById(R.id.radioFemale);
         reportBtn = findViewById(R.id.reportBtn);
         aboutBtn = findViewById(R.id.aboutBtn);
+        historyBtn = findViewById(R.id.historyBtn);
 
         registerForContextMenu(heightET);
         registerForContextMenu(weightET);
@@ -122,13 +124,19 @@ public class MainMviActivity extends AppCompatActivity {
             }
 
             // 发送Intent给ViewModel
-            hasNavigated = false; // 重置标志
+            hasNavigated = false;
             viewModel.processIntent(
                     new MainIntent.CalculateBmi(height, weight, age, gender)
             );
         });
 
         aboutBtn.setOnClickListener(v -> showAboutDialog());
+
+        // New: History button listener
+        historyBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainMviActivity.this, BmiHistoryActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void observeViewState() {
@@ -224,13 +232,17 @@ public class MainMviActivity extends AppCompatActivity {
         } else if (id == R.id.menu_about) {
             Toast.makeText(this, "BMI Calculator v3.0 (MVI)", Toast.LENGTH_SHORT).show();
             return true;
+        } else if (id == R.id.menu_history) {
+            Intent intent = new Intent(this, BmiHistoryActivity.class);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void setLocale(String lang) {
-        // 保存语言设置到 SharedPreferences（修复问题2）
+        // 保存语言设置到 SharedPreferences
         SharedPreferences prefs = getSharedPreferences("Settings", MODE_PRIVATE);
         prefs.edit().putString("Language", lang).apply();
 

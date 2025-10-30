@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' } // Add JitPack for MPAndroidChart
     }
 }
 rootProject.name = "BMI"

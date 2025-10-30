@@ -11,6 +11,7 @@
 
     <string name="bmi_btn">SEE BMI REPORT NOW</string>
     <string name="about_bmi">ABOUT BMI</string>
+    <string name="bmi_history">VIEW BMI HISTORY</string>
 
     <string name="about_bmi_title">About BMI</string>
     <string name="about_bmi_message">BMI = Mass Body Index = Height (m) / Weight (kg) ^ 2; BMI between 20 and 25 is fit.</string>
@@ -34,6 +35,7 @@
     <string name="menu_chinese">Chinese</string>
     <string name="menu_reset">Reset</string>
     <string name="menu_about">About</string>
+    <string name="menu_history">History</string>
     <string name="context_clear">Clear</string>
 
     <string name="bmi_calculator_mvc">BMI Calculator(MVC)</string>
@@ -45,7 +47,26 @@
     <string name="bmi_calculator_mvvm">BMI Calculator(MVVM)</string>
     <string name="bmi_report_mvvm">BMI Report(MVVM)</string>
 
-    <!-- New AI Suggestion String -->
+    <!-- AI Suggestion -->
     <string name="ai_health_suggestion">AI Health Suggestion</string>
 
+    <!-- BMI History -->
+    <string name="bmi_history_title">BMI History</string>
+    <string name="statistics_title">Statistics</string>
+    <string name="total_records">Total Records</string>
+    <string name="latest_bmi">Latest BMI</string>
+    <string name="bmi_trend_title">BMI Trend Chart</string>
+    <string name="bmi_trend">BMI Trend</string>
+    <string name="bmi_history_chart_desc">BMI Changes Over Time</string>
+    <string name="no_bmi_records">No BMI records yet. Calculate your BMI first!</string>
+    <string name="bmi_categories">BMI Categories</string>
+    <string name="bmi_category_underweight">&lt; 18.5: Underweight</string>
+    <string name="bmi_category_normal">18.5 - 23: Normal</string>
+    <string name="bmi_category_overweight">23 - 25: Overweight</string>
+    <string name="bmi_category_obese">&gt; 25: Obese</string>
+    <string name="underweight_line">Underweight</string>
+    <string name="normal_line">Normal</string>
+    <string name="overweight_line">Overweight</string>
+    <string name="generate_test_data">Generate Test Data</string>
+    <string name="clear_all_data">Clear All Data</string>
 </resources>
