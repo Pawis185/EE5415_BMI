@@ -18,6 +18,9 @@ public class MainViewModel extends AndroidViewModel {
     private BmiModel model;
     private MutableLiveData<MainViewState> viewStateLiveData = new MutableLiveData<>();
 
+    // 标记是否已经加载过数据
+    private boolean hasLoadedData = false;
+
     public MainViewModel(@NonNull Application application) {
         super(application);
         model = new BmiModel(application);
@@ -25,8 +28,11 @@ public class MainViewModel extends AndroidViewModel {
         // 初始化为空闲状态
         viewStateLiveData.setValue(MainViewState.idle());
 
-        // 自动加载保存的数据
-        processIntent(new MainIntent.LoadSavedData());
+        // 自动加载保存的数据（只在首次创建时）
+        if (!hasLoadedData) {
+            processIntent(new MainIntent.LoadSavedData());
+            hasLoadedData = true;
+        }
     }
 
     // 获取ViewState的LiveData

@@ -69,6 +69,11 @@ public class MainMviActivity extends AppCompatActivity {
 
         observeViewState();
 
+        // 只在首次创建时加载保存的数据
+        if (savedInstanceState == null) {
+            viewModel.processIntent(new MainIntent.LoadSavedData());
+        }
+
         // 恢复状态完成
         isRestoringState = false;
     }

@@ -151,17 +151,40 @@ public class BmiHistoryActivity extends AppCompatActivity {
         });
         xAxis.setLabelRotationAngle(-45f); // Rotate labels for better readability
 
-        // Left Y-axis (BMI values)
+        // Left Y-axis (BMI values) - Auto-scale based on data
         YAxis leftAxis = lineChart.getAxisLeft();
         leftAxis.setTextSize(10f);
         leftAxis.setDrawGridLines(true);
-        leftAxis.setAxisMinimum(10f); // Minimum BMI value
-        leftAxis.setAxisMaximum(35f); // Maximum BMI value
 
-        // Add reference lines for BMI categories
-        leftAxis.addLimitLine(createLimitLine(18.5f, getString(R.string.underweight_line), Color.BLUE));
-        leftAxis.addLimitLine(createLimitLine(23f, getString(R.string.normal_line), Color.GREEN));
-        leftAxis.addLimitLine(createLimitLine(25f, getString(R.string.overweight_line), Color.rgb(255, 165, 0))); // Orange
+        // Calculate min and max BMI values from data
+        float minBmi = Float.MAX_VALUE;
+        float maxBmi = Float.MIN_VALUE;
+        for (BmiRecord record : bmiRecords) {
+            float bmi = (float) record.getBmi();
+            minBmi = Math.min(minBmi, bmi);
+            maxBmi = Math.max(maxBmi, bmi);
+        }
+
+        // Add padding to min/max for better visualization
+        float padding = (maxBmi - minBmi) * 0.2f; // 20% padding
+        if (padding < 2.0f) padding = 2.0f; // Minimum padding of 2
+
+        leftAxis.setAxisMinimum(Math.max(10f, minBmi - padding)); // Don't go below 10
+        leftAxis.setAxisMaximum(Math.min(60f, maxBmi + padding)); // Don't exceed 60
+
+        // Add reference lines for BMI categories (only if they're in the visible range)
+        float axisMin = leftAxis.getAxisMinimum();
+        float axisMax = leftAxis.getAxisMaximum();
+
+        if (18.5f >= axisMin && 18.5f <= axisMax) {
+            leftAxis.addLimitLine(createLimitLine(18.5f, getString(R.string.underweight_line), Color.BLUE));
+        }
+        if (23f >= axisMin && 23f <= axisMax) {
+            leftAxis.addLimitLine(createLimitLine(23f, getString(R.string.normal_line), Color.GREEN));
+        }
+        if (25f >= axisMin && 25f <= axisMax) {
+            leftAxis.addLimitLine(createLimitLine(25f, getString(R.string.overweight_line), Color.rgb(255, 165, 0))); // Orange
+        }
         leftAxis.setDrawLimitLinesBehindData(true);
 
         // Right Y-axis
