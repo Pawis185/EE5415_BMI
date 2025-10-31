@@ -26,7 +26,7 @@ public class LLMApiService {
 
     // DeepSeek API配置
     private static final String API_URL = "https://api.deepseek.com/v1/chat/completions";
-    private static final String API_KEY = "sk-60bed19e6e4a49f189b6407c5bc6b23c";
+    private static final String API_KEY = "";
 
     // 使用单线程池，避免并发问题
     private ExecutorService executorService;

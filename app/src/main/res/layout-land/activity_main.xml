@@ -20,7 +20,8 @@
             android:layout_height="120dp"
             android:src="@drawable/icon_128"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="20dp" />
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/app_name" />
 
         <!-- 右侧：输入区域和按钮 -->
         <LinearLayout
@@ -114,7 +115,7 @@
                     android:text="@string/gender_female" />
             </RadioGroup>
 
-            <!-- 按钮区域 -->
+            <!-- 按钮区域 - 三个按钮横向排列 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,8 +128,22 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/bmi_btn"
+                    android:textSize="12sp"
                     android:textAllCaps="false"
-                    android:layout_marginEnd="10dp" />
+                    android:layout_marginEnd="5dp"
+                    android:padding="8dp" />
+
+                <Button
+                    android:id="@+id/historyBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/bmi_history"
+                    android:textSize="12sp"
+                    android:textAllCaps="false"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:padding="8dp" />
 
                 <Button
                     android:id="@+id/aboutBtn"
@@ -136,8 +151,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/about_bmi"
+                    android:textSize="12sp"
                     android:textAllCaps="false"
-                    android:layout_marginStart="10dp" />
+                    android:layout_marginStart="5dp"
+                    android:padding="8dp" />
             </LinearLayout>
 
         </LinearLayout>
